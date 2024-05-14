@@ -1,0 +1,32 @@
+---
+
+- name: Install docker
+  hosts: all
+  tasks:
+    - name: Fetch installation script
+      get_url:
+        url: https://get.docker.com/ 
+        dest: /tmp/docker-installer.sh
+        mode: '0755'
+
+    - name: Execute the Docker installation script
+      shell: /tmp/docker-installer.sh
+
+    - name: Add user to docker group
+      user:
+        name: debian
+        groups: docker
+        append: yes
+
+    - name: Configure Tailscale DNS for Docker
+      copy:
+        src: ./templates/docker-daemon-tailscale.json
+        dest: /etc/docker/daemon.json
+        owner: root
+        group: root
+        mode: '644'
+
+    - name: Restart Docker daemon
+      systemd_service:
+        name: docker
+        state: restarted 

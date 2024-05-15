@@ -1,0 +1,17 @@
+loki.source.file "logs" {
+  targets = [{
+    __path__    = "",
+    job         = "",
+  }]
+  forward_to = [loki.process.default.receiver]
+}
+
+loki.process "default" {
+  forward_to = [loki.write.default.receiver]
+}
+
+loki.write "default" {
+  endpoint {
+    url = "http://100.125.130.109:3100/loki/api/v1/push"
+  }
+}

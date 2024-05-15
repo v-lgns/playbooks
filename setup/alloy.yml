@@ -1,0 +1,22 @@
+---
+
+- name: Install Grafana Alloy
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Alloy
+      ansible.builtin.include_role:
+        name: grafana.grafana.alloy
+
+    - name: Copy config
+      copy:
+        src: ../templates/config.alloy
+        dest: /etc/alloy/config.alloy
+        owner: root
+        group: root
+        mode: '644'
+
+    - name: Restart alloy service
+      systemd_service:
+        name: alloy
+        state: restarted

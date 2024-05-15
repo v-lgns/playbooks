@@ -2,6 +2,7 @@
 
 - name: Install docker
   hosts: all
+  become: true
   tasks:
     - name: Fetch installation script
       get_url:
@@ -20,7 +21,7 @@
 
     - name: Configure Tailscale DNS for Docker
       copy:
-        src: ./templates/docker-daemon-tailscale.json
+        src: ../templates/docker-daemon-tailscale.json
         dest: /etc/docker/daemon.json
         owner: root
         group: root

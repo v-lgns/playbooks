@@ -2,6 +2,7 @@
 
 - name: Set up debian machine
   hosts: all
+  become: true
   tasks:
     - name: Make sure we have a 'wheel' group
       group:
@@ -34,16 +35,17 @@
 
         - name: Install packages
           apt:
-            pkg: "{{ item }}"
+            pkg:
+              - jq
+              - git
+              - gcc
+              - vim
+              - curl
+              - make
+              - tmux
+              - wget
+              - rsync
+              - unzip
+              - auditd
+              - firewalld
             state: latest
-          with_items:
-            - jq
-            - git
-            - vim
-            - curl
-            - tmux
-            - wget
-            - rsync
-            - unzip
-            - auditd
-            - firewalld

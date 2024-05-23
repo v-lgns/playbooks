@@ -19,9 +19,9 @@
         groups: docker
         append: yes
 
-    - name: Configure Tailscale DNS for Docker
+    - name: Configure Docker Daemon
       copy:
-        src: ../templates/docker-daemon-tailscale.json
+        src: ../templates/docker-daemon.json
         dest: /etc/docker/daemon.json
         owner: root
         group: root
